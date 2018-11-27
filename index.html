@@ -80,7 +80,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/11/26/one/">冉梦的第一篇博客</a>
+      <a class="article-title" href="/2018/11/26/one/">什么是BFC？</a>
     </h1>
   
 
@@ -88,20 +88,55 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+        <p>在学习前端页面布局的时候，我们经常会听到一个绕不开的名词，甚至在好多人面试的时候，会经常听到的一个词——<strong>BFC</strong></p>
+<p>那么到底什么是BFC呢？</p>
+<p>在CSS的<a href="https://www.w3.org/TR/CSS21/visuren.html#block-formatting" target="_blank" rel="noopener">官方文档</a>的说明中 <strong>BFC</strong>:全称 <em>Block formatting contexts</em>，直译过来就是块级格式化上下文。讲到这里你可能还是一头雾水，我们这里先停下来讲几个基本的概念以便有助于你接下来的理解。</p>
+<h4 id="Formatting-Context"><a href="#Formatting-Context" class="headerlink" title="Formatting Context"></a>Formatting Context</h4><p><strong>Formatting Context</strong> 格式化上下文，它是指页面中一块独立的渲染区域，这块区域有自己独立的渲染规则，规则取决于这块区域的Box属性。<br>这套独立的规则规定渲染区域内的子元素如何定位以及和其他元素之间的相互关系</p>
+<h4 id="页面的基本布局组成"><a href="#页面的基本布局组成" class="headerlink" title="页面的基本布局组成"></a>页面的基本布局组成</h4><p>首先，我们知道，CSS的页面布局是由一个个盒子(Box)组成的，但不同的盒子由不同的属性，内部元素的类型和display属性决定了这个盒子的属性。不同类型的盒子，会以不同的FC方式去渲染，Box基本上分为以下三类</p>
+<ul>
+<li><p><strong>Block-level Box</strong>:<code>display</code>值为<code>block, list-item, table</code> 的元素</p>
+</li>
+<li><p><strong>Inline-level Box</strong>:<code>display</code>值为<code>inline, inline-block, inline-table</code>的元素</p>
+</li>
+<li><p><strong>Run-in Box:</strong> css3中新增的Box类型</p>
+</li>
+</ul>
+<h4 id="BFC的定义"><a href="#BFC的定义" class="headerlink" title="BFC的定义"></a>BFC的定义</h4><p>通过上述概念的解释，我们可以得知，所谓的 <strong>BFC</strong> 它是一个独立的渲染区域，只有Block-level box参与， 它规定了内部的Block-level Box如何布局，并且与这个区域外部毫不相干。</p>
+<h3 id="BFC布局规则和创建"><a href="#BFC布局规则和创建" class="headerlink" title="BFC布局规则和创建"></a>BFC布局规则和创建</h3><h4 id="BFC布局规则"><a href="#BFC布局规则" class="headerlink" title="BFC布局规则"></a>BFC布局规则</h4><ul>
+<li><p>内部的Box会在垂直方向，一个接一个地放置。</p>
+</li>
+<li><p>Box垂直方向的距离由margin决定。属于同一个BFC的两个相邻Box的margin会发生重叠</p>
+</li>
+<li><p>每个元素的margin box的左边， 与包含块border box的左边相接触(对于从左往右的格式化，否则相反)。即使存在浮动也是如此。</p>
+</li>
+<li><p>BFC的区域不会与float box重叠。</p>
+</li>
+<li><p>BFC就是页面上的一个隔离的独立容器，容器里面的子元素不会影响到外面的元素。反之也如此。</p>
+</li>
+<li><p>计算BFC的高度时，浮动元素也参与计算</p>
+</li>
+</ul>
+<h4 id="BFC的创建（满足下列条件之一）"><a href="#BFC的创建（满足下列条件之一）" class="headerlink" title="BFC的创建（满足下列条件之一）"></a>BFC的创建（满足下列条件之一）</h4><ul>
+<li><p>根元素或其它包含它的元素</p>
+</li>
+<li><p>浮动 (元素的 float 不是 none)</p>
+</li>
+<li><p>绝对定位的元素 (元素具有 position 为 absolute 或 fixed)</p>
+</li>
+<li><p>非块级元素具有 display: inline-block，table-cell, table-caption, flex, inline-flex</p>
+</li>
+<li><p>块级元素具有overflow ，且值不是 visible</p>
+</li>
+</ul>
+<h2 id="BFC的作用"><a href="#BFC的作用" class="headerlink" title="BFC的作用"></a>BFC的作用</h2><h3 id="清除浮动"><a href="#清除浮动" class="headerlink" title="清除浮动"></a>清除浮动</h3><p><strong>HTML</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;parents&quot;&gt;</span><br><span class="line">  &lt;div class=&quot;child&quot;&gt;&lt;/div&gt;   </span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure></p>
+<p><strong>CSS</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">.parents&#123;</span><br><span class="line">  width: 300px;</span><br><span class="line">  background-color: blue;</span><br><span class="line">&#125;</span><br><span class="line">.child&#123;</span><br><span class="line">  width:100px;</span><br><span class="line">  height: 100px;</span><br><span class="line">  background-color: black;</span><br><span class="line">  float: left;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<!-- 父元素里面包了一个子元素，子元素浮动，此时-->
+<p><img src="../../images/1.png" alt="none"></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/11/26/one/" data-id="cjoyckxyu0000mnqzyqudhbxs" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/11/26/one/" data-id="cjozraqe500008kqzxh9giz5w" class="article-share-link">Share</a>
       
       
     </footer>
@@ -146,7 +181,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/11/26/hello-world/" data-id="cjoyckxyy0001mnqz6zy1dw49" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/11/26/hello-world/" data-id="cjozraqe800018kqzwtlo5od5" class="article-share-link">Share</a>
       
       
     </footer>
@@ -187,7 +222,7 @@
       <ul>
         
           <li>
-            <a href="/2018/11/26/one/">冉梦的第一篇博客</a>
+            <a href="/2018/11/26/one/">什么是BFC？</a>
           </li>
         
           <li>
