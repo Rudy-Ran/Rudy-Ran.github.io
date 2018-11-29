@@ -15,7 +15,7 @@
 <meta property="og:description" content="在学习前端页面布局的时候，我们经常会听到一个绕不开的名词，甚至在好多人面试的时候，会经常听到的一个词——BFC 那么到底什么是BFC呢？ 在CSS的官方文档的说明中 BFC:全称 Block formatting contexts，直译过来就是块级格式化上下文。讲到这里你可能还是一头雾水，我们这里先停下来讲几个基本的概念以便有助于你接下来的理解。 Formatting ContextFormatt">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/2018/11/images/1.png">
-<meta property="og:updated_time" content="2018-11-27T13:10:12.561Z">
+<meta property="og:updated_time" content="2018-11-29T15:13:38.911Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="什么是BFC？">
 <meta name="twitter:description" content="在学习前端页面布局的时候，我们经常会听到一个绕不开的名词，甚至在好多人面试的时候，会经常听到的一个词——BFC 那么到底什么是BFC呢？ 在CSS的官方文档的说明中 BFC:全称 Block formatting contexts，直译过来就是块级格式化上下文。讲到这里你可能还是一头雾水，我们这里先停下来讲几个基本的概念以便有助于你接下来的理解。 Formatting ContextFormatt">
@@ -135,7 +135,7 @@
 <h2 id="BFC的作用"><a href="#BFC的作用" class="headerlink" title="BFC的作用"></a>BFC的作用</h2><h3 id="清除浮动"><a href="#清除浮动" class="headerlink" title="清除浮动"></a>清除浮动</h3><p><strong>HTML</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;parents&quot;&gt;</span><br><span class="line">  &lt;div class=&quot;child&quot;&gt;&lt;/div&gt;   </span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure></p>
 <p><strong>CSS</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">.parents&#123;</span><br><span class="line">  width: 300px;</span><br><span class="line">  background-color: blue;</span><br><span class="line">&#125;</span><br><span class="line">.child&#123;</span><br><span class="line">  width:100px;</span><br><span class="line">  height: 100px;</span><br><span class="line">  background-color: black;</span><br><span class="line">  float: left;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <!-- 父元素里面包了一个子元素，子元素浮动，此时-->
-<p><img src="../../images/1.png" alt="none"></p>
+<p><img src="../../images/1.png" alt="父元素里面包了一个子元素，子元素浮动"></p>
 
       
     </div>
