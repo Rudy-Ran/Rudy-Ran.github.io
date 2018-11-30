@@ -66,9 +66,9 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-one" class="article article-type-post" itemscope="" itemprop="blogPost">
+    <article id="post-BFC" class="article article-type-post" itemscope="" itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2018/11/26/one/" class="article-date">
+    <a href="/2018/11/26/BFC/" class="article-date">
   <time datetime="2018-11-26T13:26:00.753Z" itemprop="datePublished">2018-11-26</time>
 </a>
     
@@ -80,7 +80,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/11/26/one/">什么是BFC？</a>
+      <a class="article-title" href="/2018/11/26/BFC/">什么是BFC？</a>
     </h1>
   
 
@@ -130,13 +130,18 @@
 </ul>
 <h2 id="BFC的作用"><a href="#BFC的作用" class="headerlink" title="BFC的作用"></a>BFC的作用</h2><h3 id="清除浮动"><a href="#清除浮动" class="headerlink" title="清除浮动"></a>清除浮动</h3><p><strong>HTML</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;parents&quot;&gt;</span><br><span class="line">  &lt;div class=&quot;child&quot;&gt;&lt;/div&gt;   </span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure></p>
 <p><strong>CSS</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">.parents&#123;</span><br><span class="line">  width: 300px;</span><br><span class="line">  background-color: blue;</span><br><span class="line">&#125;</span><br><span class="line">.child&#123;</span><br><span class="line">  width:100px;</span><br><span class="line">  height: 100px;</span><br><span class="line">  background-color: black;</span><br><span class="line">  float: left;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<!-- 父元素里面包了一个子元素，子元素浮动，此时-->
 <p><img src="../../images/1.png" alt="父元素里面包了一个子元素，子元素浮动"></p>
+<p>可以看到，父元素里面包含了一个子元素，在子元素浮动的情况下，脱离文档流，父元素高度不会被子元素撑开，这是如果我们需要让父元素被浮动的子元素撑开，根据BFC布局规则 <strong>计算BFC的高度时，浮动元素也参与计算</strong>，我们让父级元素生成一个BFC，则父元素内的子元素也会计算高度<br>可以通过以下方式生成一个BFC：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">.parents:&#123;</span><br><span class="line">  /*overflow: hidden;*/</span><br><span class="line">  /*float: left;*/</span><br><span class="line">  /*display: inline-block;*/</span><br><span class="line">  /*position: absolute;*/</span><br><span class="line">  &#125;`</span><br></pre></td></tr></table></figure></p>
+<p><img src="../../images/2.png" alt="清除浮动后"><br>具体请参照上面BFC的创建。</p>
+<h3 id="解决外边距塌陷"><a href="#解决外边距塌陷" class="headerlink" title="解决外边距塌陷"></a>解决外边距塌陷</h3><p><strong>HTML</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;div&quot;&gt;&lt;/div&gt;</span><br><span class="line">&lt;div class=&quot;div&quot;&gt;&lt;/div&gt;</span><br></pre></td></tr></table></figure></p>
+<p><strong>CSS</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">.div&#123;</span><br><span class="line">  border: 1px solid red;</span><br><span class="line">  width: 50px;</span><br><span class="line">  height: 50px;</span><br><span class="line">  margin: 50px 0;</span><br><span class="line">  background-color: pink;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>页面显示如下<br><!-- 父元素里面包了一个子元素，子元素浮动--><br><img src="../../images/3.png" alt="外边距发生塌陷"><br>所谓的外边距塌陷是指：块级元素的上下外边距有时候会合并，合并后的外边距等于合并前两个外边距中的较大值，这种现象称为外边距塌陷<br>解决外边距塌陷，我们可以根据 <strong>Box垂直方向的距离由margin决定。属于同一个BFC的两个相邻Box的margin会发生重叠</strong> 因此，我们可以让两个p标签属于不同的BFC，则他们之间就不会发生外边距的塌陷问题<br>方式如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;div&quot;&gt;&lt;/div&gt;</span><br><span class="line">&lt;div class=&quot;wrap&quot;&gt;</span><br><span class="line">  &lt;div class=&quot;div&quot;&gt;&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">.wrap&#123;</span><br><span class="line">  overflow: hidden;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>效果如下：<br><img src="../../images/4.png" alt="塌陷解决"><br><strong>BFC就是页面上的一个隔离的独立容器，容器里面的子元素不会影响到外面的元素。反之也如此</strong></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/11/26/one/" data-id="cjozraqe500008kqzxh9giz5w" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/11/26/BFC/" data-id="cjp40uwvw00008hqz9as58h4q" class="article-share-link">Share</a>
       
       
     </footer>
@@ -222,7 +227,7 @@
       <ul>
         
           <li>
-            <a href="/2018/11/26/one/">什么是BFC？</a>
+            <a href="/2018/11/26/BFC/">什么是BFC？</a>
           </li>
         
           <li>
