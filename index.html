@@ -21,8 +21,6 @@
     <link rel="icon" href="/favicon.png">
   
   
-    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
-  
   <link rel="stylesheet" href="/css/style.css">
 </head>
 </html>
@@ -90,7 +88,7 @@
       
         <p>在学习前端页面布局的时候，我们经常会听到一个绕不开的名词，甚至在好多人面试的时候，会经常听到的一个词——<strong>BFC</strong></p>
 <p>那么到底什么是BFC呢？</p>
-<p>在CSS的<a href="https://www.w3.org/TR/CSS21/visuren.html#block-formatting" target="_blank" rel="noopener">官方文档</a>的说明中 <strong>BFC</strong>:全称 <em>Block formatting contexts</em>，直译过来就是块级格式化上下文。讲到这里你可能还是一头雾水，我们这里先停下来讲几个基本的概念以便有助于你接下来的理解。</p>
+<p>在CSS的<a href="https://www.w3.org/TR/CSS21/visuren.html#block-formatting" target="_blank" rel="noopener">官方文档</a>的说明中，<strong>BFC</strong>:全称 <em>Block formatting contexts</em>，直译过来就是块级格式化上下文。讲到这里你可能还是一头雾水，我们这里先停下来讲几个基本的概念以便有助于你接下来的理解。</p>
 <h4 id="Formatting-Context"><a href="#Formatting-Context" class="headerlink" title="Formatting Context"></a>Formatting Context</h4><p><strong>Formatting Context</strong> 格式化上下文，它是指页面中一块独立的渲染区域，这块区域有自己独立的渲染规则，规则取决于这块区域的Box属性。<br>这套独立的规则规定渲染区域内的子元素如何定位以及和其他元素之间的相互关系</p>
 <h4 id="页面的基本布局组成"><a href="#页面的基本布局组成" class="headerlink" title="页面的基本布局组成"></a>页面的基本布局组成</h4><p>首先，我们知道，CSS的页面布局是由一个个盒子(Box)组成的，但不同的盒子由不同的属性，内部元素的类型和display属性决定了这个盒子的属性。不同类型的盒子，会以不同的FC方式去渲染，Box基本上分为以下三类</p>
 <ul>
@@ -128,20 +126,61 @@
 <li><p>块级元素具有overflow ，且值不是 visible</p>
 </li>
 </ul>
-<h2 id="BFC的作用"><a href="#BFC的作用" class="headerlink" title="BFC的作用"></a>BFC的作用</h2><h3 id="清除浮动"><a href="#清除浮动" class="headerlink" title="清除浮动"></a>清除浮动</h3><p><strong>HTML</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;parents&quot;&gt;</span><br><span class="line">  &lt;div class=&quot;child&quot;&gt;&lt;/div&gt;   </span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure></p>
-<p><strong>CSS</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">.parents&#123;</span><br><span class="line">  width: 300px;</span><br><span class="line">  background-color: blue;</span><br><span class="line">&#125;</span><br><span class="line">.child&#123;</span><br><span class="line">  width:100px;</span><br><span class="line">  height: 100px;</span><br><span class="line">  background-color: black;</span><br><span class="line">  float: left;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="BFC的作用"><a href="#BFC的作用" class="headerlink" title="BFC的作用"></a>BFC的作用</h2><h3 id="清除浮动"><a href="#清除浮动" class="headerlink" title="清除浮动"></a>清除浮动</h3><p><strong>HTML</strong></p>
+<pre><code>&lt;div class=&quot;parents&quot;&gt;
+  &lt;div class=&quot;child&quot;&gt;&lt;/div&gt;   
+&lt;/div&gt;
+</code></pre><p><strong>CSS</strong></p>
+<pre class="line-numbers language-CSS"><code class="language-CSS">.parents{
+  width: 300px;
+  background-color: blue;
+}
+.child{
+  width:100px;
+  height: 100px;
+  background-color: black;
+  float: left;
+}
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p><img src="../../images/1.png" alt="父元素里面包了一个子元素，子元素浮动"></p>
-<p>可以看到，父元素里面包含了一个子元素，在子元素浮动的情况下，脱离文档流，父元素高度不会被子元素撑开，这是如果我们需要让父元素被浮动的子元素撑开，根据BFC布局规则 <strong>计算BFC的高度时，浮动元素也参与计算</strong>，我们让父级元素生成一个BFC，则父元素内的子元素也会计算高度<br>可以通过以下方式生成一个BFC：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">.parents:&#123;</span><br><span class="line">  /*overflow: hidden;*/</span><br><span class="line">  /*float: left;*/</span><br><span class="line">  /*display: inline-block;*/</span><br><span class="line">  /*position: absolute;*/</span><br><span class="line">  &#125;`</span><br></pre></td></tr></table></figure></p>
+<p>可以看到，父元素里面包含了一个子元素，在子元素浮动的情况下，脱离文档流，父元素高度不会被子元素撑开，这是如果我们需要让父元素被浮动的子元素撑开，根据BFC布局规则 <strong>计算BFC的高度时，浮动元素也参与计算</strong>，我们让父级元素生成一个BFC，则父元素内的子元素也会计算高度<br>可以通过以下方式生成一个BFC：</p>
+<pre class="line-numbers language-CSS"><code class="language-CSS">.parents:{
+  /*overflow: hidden;*/
+  /*float: left;*/
+  /*display: inline-block;*/
+  /*position: absolute;*/
+  }`
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p><img src="../../images/2.png" alt="清除浮动后"><br>具体请参照上面BFC的创建。</p>
-<h3 id="解决外边距塌陷"><a href="#解决外边距塌陷" class="headerlink" title="解决外边距塌陷"></a>解决外边距塌陷</h3><p><strong>HTML</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;div&quot;&gt;&lt;/div&gt;</span><br><span class="line">&lt;div class=&quot;div&quot;&gt;&lt;/div&gt;</span><br></pre></td></tr></table></figure></p>
-<p><strong>CSS</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">.div&#123;</span><br><span class="line">  border: 1px solid red;</span><br><span class="line">  width: 50px;</span><br><span class="line">  height: 50px;</span><br><span class="line">  margin: 50px 0;</span><br><span class="line">  background-color: pink;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>页面显示如下<br><!-- 父元素里面包了一个子元素，子元素浮动--><br><img src="../../images/3.png" alt="外边距发生塌陷"><br>所谓的外边距塌陷是指：块级元素的上下外边距有时候会合并，合并后的外边距等于合并前两个外边距中的较大值，这种现象称为外边距塌陷<br>解决外边距塌陷，我们可以根据 <strong>Box垂直方向的距离由margin决定。属于同一个BFC的两个相邻Box的margin会发生重叠</strong> 因此，我们可以让两个p标签属于不同的BFC，则他们之间就不会发生外边距的塌陷问题<br>方式如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;div&quot;&gt;&lt;/div&gt;</span><br><span class="line">&lt;div class=&quot;wrap&quot;&gt;</span><br><span class="line">  &lt;div class=&quot;div&quot;&gt;&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">.wrap&#123;</span><br><span class="line">  overflow: hidden;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="解决外边距塌陷"><a href="#解决外边距塌陷" class="headerlink" title="解决外边距塌陷"></a>解决外边距塌陷</h3><p><strong>HTML</strong></p>
+<pre class="line-numbers language-HTML"><code class="language-HTML"><div class="div"></div>
+<div class="div"></div>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p><strong>CSS</strong></p>
+<pre class="line-numbers language-CSS"><code class="language-CSS">.div{
+  border: 1px solid red;
+  width: 50px;
+  height: 50px;
+  margin: 50px 0;
+  background-color: pink;
+}
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>页面显示如下<br><!-- 父元素里面包了一个子元素，子元素浮动--><br><img src="../../images/3.png" alt="外边距发生塌陷"><br>所谓的外边距塌陷是指：块级元素的上下外边距有时候会合并，合并后的外边距等于合并前两个外边距中的较大值，这种现象称为外边距塌陷<br>解决外边距塌陷，我们可以根据 <strong>Box垂直方向的距离由margin决定。属于同一个BFC的两个相邻Box的margin会发生重叠</strong> 因此，我们可以让两个p标签属于不同的BFC，则他们之间就不会发生外边距的塌陷问题<br>方式如下：</p>
+<pre class="line-numbers language-HTML"><code class="language-HTML"><div class="div"></div>
+<div class="wrap">
+  <div class="div"></div>
+</div>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-CSS"><code class="language-CSS">.wrap{
+  overflow: hidden;
+}
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 <p>效果如下：<br><img src="../../images/4.png" alt="塌陷解决"><br><strong>BFC就是页面上的一个隔离的独立容器，容器里面的子元素不会影响到外面的元素。反之也如此</strong></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/11/26/BFC/" data-id="cjp40uwvw00008hqz9as58h4q" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/11/26/BFC/" data-id="cjp5ecfl30000scqzqzry2qit" class="article-share-link">Share</a>
       
       
     </footer>
@@ -174,19 +213,23 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre class="line-numbers language-bash"><code class="language-bash">$ hexo new <span class="token string">"My New Post"</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre class="line-numbers language-bash"><code class="language-bash">$ hexo server
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre class="line-numbers language-bash"><code class="language-bash">$ hexo generate
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre class="line-numbers language-bash"><code class="language-bash">$ hexo deploy
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/11/26/hello-world/" data-id="cjozraqe800018kqzwtlo5od5" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/11/26/hello-world/" data-id="cjp5ecfl70001scqzgkia7gra" class="article-share-link">Share</a>
       
       
     </footer>
