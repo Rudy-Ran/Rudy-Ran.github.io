@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>JS判断用户连续点击事件 | 十年饮冰，难凉热血</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="背景再做某项目的登录模块的时候，有一个需求是，点击某个按钮，会弹出系统的帮助文档，当用户快速点击5下以上时，弹出修改密码的弹窗，下面是功能开发的总结，主要是要判断用户点击的次数，定时器的使用。 JS点击事件JS为我们提供了对点击事件的两种判断，点击和双击（click 和 dblclick）     var oBtn = document.getElementById(&apos;clickBtn&apos;);">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS判断用户连续点击事件">
+<meta property="og:url" content="http://yoursite.com/2018/12/14/JS判断用户连续点击事件/index.html">
+<meta property="og:site_name" content="十年饮冰，难凉热血">
+<meta property="og:description" content="背景再做某项目的登录模块的时候，有一个需求是，点击某个按钮，会弹出系统的帮助文档，当用户快速点击5下以上时，弹出修改密码的弹窗，下面是功能开发的总结，主要是要判断用户点击的次数，定时器的使用。 JS点击事件JS为我们提供了对点击事件的两种判断，点击和双击（click 和 dblclick）     var oBtn = document.getElementById(&apos;clickBtn&apos;);">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-12-14T12:52:23.050Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JS判断用户连续点击事件">
+<meta name="twitter:description" content="背景再做某项目的登录模块的时候，有一个需求是，点击某个按钮，会弹出系统的帮助文档，当用户快速点击5下以上时，弹出修改密码的弹窗，下面是功能开发的总结，主要是要判断用户点击的次数，定时器的使用。 JS点击事件JS为我们提供了对点击事件的两种判断，点击和双击（click 和 dblclick）     var oBtn = document.getElementById(&apos;clickBtn&apos;);">
+  
+    <link rel="alternate" href="/atom.xml" title="十年饮冰，难凉热血" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">十年饮冰，难凉热血</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">在平坦的路面上曲折前行</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-JS判断用户连续点击事件" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/12/14/JS判断用户连续点击事件/" class="article-date">
+  <time datetime="2018-12-14T12:09:37.000Z" itemprop="datePublished">2018-12-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      JS判断用户连续点击事件
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>再做某项目的登录模块的时候，有一个需求是，点击某个按钮，会弹出系统的帮助文档，当用户快速点击5下以上时，弹出修改密码的弹窗，下面是功能开发的总结，主要是要判断用户点击的次数，定时器的使用。</p>
+<h3 id="JS点击事件"><a href="#JS点击事件" class="headerlink" title="JS点击事件"></a>JS点击事件</h3><p>JS为我们提供了对点击事件的两种判断，点击和双击（<em>click 和 dblclick</em>）</p>
+<pre class="line-numbers language-javascript"><code class="language-javascript">    <span class="token keyword">var</span> oBtn <span class="token operator">=</span> document<span class="token punctuation">.</span><span class="token function">getElementById</span><span class="token punctuation">(</span><span class="token string">'clickBtn'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    oBtn<span class="token punctuation">.</span>onclick <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'click'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    oBtn<span class="token punctuation">.</span>ondblclick <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'dblclick'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>所谓的双击事件，就是连续的两次单击，所以如果click和dblclick同时存在，click执行的优先级更高，因此，如果我们想在执行dlbclick时，不去执行click事件，需要借助一个定时器，代码如下</p>
+<pre class="line-numbers language-javascript"><code class="language-javascript">    <span class="token keyword">var</span> timer <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+    <span class="token keyword">var</span> oBtn <span class="token operator">=</span> document<span class="token punctuation">.</span><span class="token function">getElementById</span><span class="token punctuation">(</span><span class="token string">'clickBtn'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    oBtn<span class="token punctuation">.</span>onclick <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token function">clearTimeout</span><span class="token punctuation">(</span>timer<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        timer <span class="token operator">=</span> <span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+                    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'click'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span><span class="token number">300</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+    oBtn<span class="token punctuation">.</span>ondblclick <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token function">clearTimeout</span><span class="token punctuation">(</span>timer<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'dblclick'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>采用定时的原理是：<strong>因为单击事件的优先级更高，用户的双击操作，一定会先去执行click的函数，我们设置一个定时器，让click函数内的具体执行操作延迟执行，这样如果用户是一个双击操作，会在dblclick的函数里清除掉单击事件里的定时器，从而click里面的打印不会出来</strong></p>
+<h3 id="如何判断用户的多次点击操作"><a href="#如何判断用户的多次点击操作" class="headerlink" title="如何判断用户的多次点击操作"></a>如何判断用户的多次点击操作</h3><p>JS里是没有判断多次点击的方法的，需要我们自己去封装一个多次点击的函数</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/12/14/JS判断用户连续点击事件/" data-id="cjpnzqg9400007pqz9shlrfu0" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/12/07/js遍历/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">JS遍历</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/12/14/JS判断用户连续点击事件/">JS判断用户连续点击事件</a>
+          </li>
+        
+          <li>
+            <a href="/2018/12/07/js遍历/">JS遍历</a>
+          </li>
+        
+          <li>
+            <a href="/2018/11/26/BFC/">什么是BFC？</a>
+          </li>
+        
+          <li>
+            <a href="/2018/11/26/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 RudyRan<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
