@@ -86,11 +86,44 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <p>一个React组件的生命周期通常分为创建(初始化和挂载)、更新、销毁三个阶段，对于生命周期的每个阶段，React提供了不同的钩子函数，让我们去执行不同的操作。<br><img src="/2019/03/05/React生命周期详解/1.png" alt="清除浮动后"></p>
+<h2 id="组件初始化阶段-initialization"><a href="#组件初始化阶段-initialization" class="headerlink" title="组件初始化阶段(initialization)"></a>组件初始化阶段(initialization)</h2><ol>
+<li><code>getDefaultProps()</code></li>
+<li><code>getInitialState()</code></li>
+<li><code>constructor()</code></li>
+</ol>
+<p>在组件的初始化阶段，React提供的生命周期函数主要包含以上三种</p>
+<p>但要特别注意他们之间的区别,<code>getDefaultProps()</code>方法和<code>getInitialState()</code>方法是当采用ES5的<code>React.CreateClass</code>方式创建组件时的内置生命周期函数,如果你采用ES6的<code>extends React.Component</code>方式创建组件，只有<code>constructor()</code>方法</p>
+<p>即：ES5 <code>getDefaultProps()、getInitialState（）</code> = ES6 <code>constructor()</code></p>
+<p>由于ES5创建组件的方式已不在常用，因此这里主要介绍<code>constructor()</code>方法:</p>
+<p><code>constructor(props)</code>如果存在，要调用<code>super(props)</code>,一般用来初始化state和绑定this，只执行一次</p>
+<pre class="line-numbers language-javascript"><code class="language-javascript"><span class="token keyword">import</span> React<span class="token punctuation">,</span> <span class="token punctuation">{</span> Component <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'react'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">App</span> <span class="token keyword">extends</span> <span class="token class-name">Component</span> <span class="token punctuation">{</span>
+  <span class="token function">constructor</span><span class="token punctuation">(</span>props<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">super</span><span class="token punctuation">(</span>props<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>state<span class="token operator">=</span><span class="token punctuation">{</span>
+        age<span class="token punctuation">:</span><span class="token string">'23'</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>handleClick <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>handleClick<span class="token punctuation">.</span><span class="token function">bind</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+  <span class="token function">handleClick</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+      console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'handle的this指向：'</span><span class="token punctuation">,</span><span class="token keyword">this</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+  <span class="token function">render</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+      <span class="token keyword">return</span><span class="token punctuation">(</span>
+          <span class="token operator">&lt;</span>div<span class="token operator">></span>
+            <span class="token operator">&lt;</span>button onClick<span class="token operator">=</span><span class="token punctuation">{</span><span class="token keyword">this</span><span class="token punctuation">.</span>handleClick<span class="token punctuation">}</span><span class="token operator">></span>点击事件<span class="token operator">&lt;</span><span class="token operator">/</span>button<span class="token operator">></span>
+          <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">></span>
+      <span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/05/React生命周期详解/" data-id="cjsvqdumn0004giqzbf75tsn7" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/03/05/React生命周期详解/" data-id="cjsvqeb5h0004hvqzw1iespd1" class="article-share-link">Share</a>
       
       
     </footer>
@@ -186,7 +219,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/02/03/JS判断用户连续点击事件/" data-id="cjsvqdumd0000giqz68zw1szs" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/02/03/JS判断用户连续点击事件/" data-id="cjsvqeb5b0001hvqzgzczkrxp" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/">JavaScript</a></li></ul>
@@ -299,7 +332,7 @@ console<span class="token punctuation">.</span><span class="token function">log<
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/12/07/js遍历/" data-id="cjsvqdumm0003giqzj5c99qfq" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/12/07/js遍历/" data-id="cjsvqeb5g0003hvqzywyec8ou" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/">JavaScript</a></li></ul>
@@ -429,7 +462,7 @@ console<span class="token punctuation">.</span><span class="token function">log<
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/11/26/BFC/" data-id="cjsvqdumh0001giqzt4agix4i" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/11/26/BFC/" data-id="cjsvqeb570000hvqzst53w5fw" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CSS/">CSS</a></li></ul>
